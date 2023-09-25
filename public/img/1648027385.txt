@@ -1,0 +1,230 @@
+<div class="container mb-5">
+	<div class="form-row  single--product-cont">
+		<div class="row row-light lightGallery single--product-row" style="margin-left: 0px; margin-right: 0px;">
+
+		<div class="col-12 col-md-12 col-lg-6 col-xl-6 mr-auto">
+			<div class=" row">
+				<a href="{product_image}" class="product-image lightgallery-item" thumb="{product_thumb}" style="height: 400px; width: 100%;">
+					<img style="    width: 100%;
+					/* height: 0px; */
+					object-fit: contain;
+					background-size: cover;
+					height: 400px;" src="{product_image}" thumb="{product_image}" class="thumbnail img-fluid mb-3" alt="{image_alt}" />
+				</a>
+				<br>
+				{product_images}
+
+				  
+
+				
+			</div>
+		</div>
+
+		
+
+		<div class="col-12 col-md-12 ml-auto col-lg-6">
+			<h4>{product_name}</h4>
+
+			<div class="d-flex align-items-center single--product-btn">
+				<div class="mr-2">
+					<span style="{old_price_show}" class="text-danger"> <i class="{currency}"></i> <span class="text-danger" style="text-decoration: line-through">{prod_price_old_formatted}</span></span>
+					<span class="lead"><i class="{currency}"></i>{product_price}</span>
+				</div>
+				
+			</div>
+
+
+			<div class="row sub--item_list">
+				<div class="col-sm-12 col-md-10">
+					<div class="form-group prselect sub--item-list">
+						{sub_items_list}
+					</div>
+				</div>
+			</div>
+
+			
+
+			{relateds2}
+
+			<div class="row" style="margin-top: 10px;">
+				<div class=" d-flex">
+					<div class="md-form input-group mb-3 choose--quantity change-quenty">
+
+						<div class="input-group-prepend align-items-center counters-1">
+						  <button class="btn btn-md m-0 px-3 quantity--btn quantity--minus boss boss-1" type="button"  id="MaterialButton-addon1" disabled><i class="icon-minus2"></i></button>
+						</div>
+
+						<input data-id="{prod_id}" type="number"  class="form-control  counters-main quantity--number" placeholder="" aria-label="Example text with button addon"
+						  aria-describedby="MaterialButton-addon1" style="border: none;" disabled>
+
+						  <div class="input-group-prepend align-items-center counters-2">
+							<button class="btn btn-md m-0 px-3 quantity--btn quantity--plus boss boss-1" type="button" id="MaterialButton-addon1"><i class="icon-plus2"></i></button>
+						  </div>
+
+					  </div>
+
+
+					  <button class="btn button-cart" onclick='add_to_cart({prod_id})' {prod_add_visible}><i class="icon-shopping-cart mr-1 lead"> კალათაში დამატება</i></button>
+
+					  <div class="ml-2 gul" id="prod_guli_{prod_id}">
+						{guli}
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="rate--star">
+				{product_description}
+	
+			</div>
+		</div>
+
+	</div>
+
+	<!-- {relateds2} -->
+
+		<div class="col-12 mt-3 mb-3 mt-lg-0">
+			<hr />
+			{starz}
+		</div>
+
+		<div class="col-12 col-md-6 mt-3 mb-3 mt-lg-0 align-self-start">
+			{wearhouses}
+			{fb_comments}
+		</div>
+
+	</div>
+
+</div>
+
+{relateds}
+
+<script>
+	var swiper = new Swiper(".mySwiper-41", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+
+	$(document).ready(function() {
+	let btn = $("#prod_wrap").find(".choose--quantity").find(".boss");
+	$(btn).on('click', function(e) {
+		e.preventDefault();
+		const input = $(this).closest(".choose--quantity").find(".quantity--number");
+		let prod_id = $(input).data('id');
+
+		let current = parseFloat($(input).val());
+
+		// შეამოწმე prod_id
+		if(prod_id == 0) {
+		alert(`აირჩიეთ ${cvl}`);
+		return;
+		}else {
+
+		if($(this).hasClass('quantity--plus')) {
+			input.val(++current);
+			$(this).closest('.choose--quantity').find('.quantity--minus').removeAttr('disabled');
+		}else {
+			(current < 2) ? null : input.val(--current);
+			if($(this).hasClass('quantity--minus') && current === 1) {
+			$(this).attr('disabled','disabled');
+			}
+			}
+		}
+
+		plus_minus_product_cart(prod_id,current);
+	});
+
+		$(".lightGallery").lightGallery({
+			selector: ".lightgallery-item",
+			share: false
+		});
+
+	let subItemElement = domElement('.sub--item_list');
+
+	for(let i = 0; i < subItemElement.children.length;i++) {
+		if(subItemElement.children[i].firstElementChild.children.length > 0) {
+			subItemElement.style.display = 'flex';
+		}else {
+			subItemElement.style.display = 'none';
+		}
+	}
+
+});
+
+
+var swiper = new Swiper(".mySwiper", {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      
+      });
+
+</script>
+
+<style>
+.change-quenty{
+	width: 70px;
+	border: 1px solid  rgba(206, 206, 206, 0.904);
+}
+.counters-1,.counters-2{
+	width: 32%;
+	background: rgba(231, 228, 228, 0.459);
+	text-align: center;
+	padding-left: 2px;
+}
+.counters-main{
+	width: 36% !important;
+	background: rgba(175, 173, 173, 0.904);
+	color: black;
+	padding: 0px !important;
+	text-align:center;
+	padding-left: 6px !important;
+	z-index: 4;
+}
+.boss-1 {
+	border: none !important;
+}
+.counters-1{
+	border-right: 1px solid rgba(206, 206, 206, 0.904);
+}
+.counters-2{
+	border-right: 1px solid rgba(206, 206, 206, 0.904);
+
+	border-left: 1px solid rgba(206, 206, 206, 0.904);
+}
+
+.button-cart{
+	background-color: #80A9A4 ;
+	color: #fff;
+	font-size: 1rem;
+	height: 40px;
+	margin-top: 16px;
+	padding-top: 5px;
+	margin-left: 40px;
+}
+.gul button{
+	border: 1px solid #fff !important;
+	color: black !important;
+}
+.icon-shopping-cart{
+	font-size: 0.8rem !important;
+}
+.clear-skin .btn-outline-primary{
+	margin-top: 10px;
+	color:black !important;
+	margin-top: 14px;
+	border: none !important;
+}
+.clear-skin .btn-outline-primary:hover{
+	margin-top: 10px;
+	color:black !important;
+	margin-top: 14px;
+	border: none !important;
+}
+</style>
